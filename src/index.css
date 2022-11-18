@@ -67,6 +67,7 @@ img {
   background: var(--black-color);
   color: var(--white-color);
   position: sticky;
+  margin-bottom: .5rem;
 }
 .tasks {
   background: rgb(209, 227, 253);
@@ -74,6 +75,15 @@ img {
   font-weight: 600;
   padding: 1rem;
   margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+}
+.tasks input[type="checkbox"] {
+  width: fit-content;
+  height: 1.7rem;
+  width: 1.7rem;
+  accent-color: rgb(94, 204, 94);
 }
 .title {
   font-size: 1.4rem;

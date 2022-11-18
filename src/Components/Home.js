@@ -5,6 +5,12 @@ const Home = () => {
   const [titlearr, settitlearr] = useState([]);
   const [change, setchange] = useState("");
   const inputRef = useRef();
+  const headingRef = useRef();
+  const [heading, setheading] = useState({
+    title: "",
+    isInput: true,
+  });
+
   const addNewCol = () => {
     settitlearr([]);
     const note = {
@@ -12,20 +18,32 @@ const Home = () => {
     };
     column.push(note);
     setcolumn([...column]);
+    setheading({
+      title: "",
+      isInput: true,
+    });
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    if(!change) return
+    if (!inputRef.current.value) return;
     const title = change;
     titlearr.push(title);
     settitlearr([...titlearr]);
     inputRef.current.value = "";
-    setchange('')
     const actualTitle = titlearr;
     column[e.target.id] = {
       ...column[e.target.id],
       titles: actualTitle,
     };
+  };
+  const handleHeading = (e) => {
+    e.preventDefault();
+    const heading = headingRef.current.value;
+    const isInput = false;
+    setheading({
+      title: heading,
+      isInput: isInput,
+    });
   };
   return (
     <>
@@ -37,11 +55,22 @@ const Home = () => {
           ? column?.map((curr, idx) => {
               return (
                 <div className="box" key={idx} id={idx}>
-                  <h2>TODO</h2>
+                  {heading.isInput ? (
+                    <form onSubmit={handleHeading}>
+                      <input
+                        type="text"
+                        placeholder="Add List Name"
+                        ref={headingRef}
+                      />
+                    </form>
+                  ) : (
+                    <h2>{heading.title}</h2>
+                  )}
                   {column[idx]?.titles?.map((curr, idx) => {
                     return (
                       <div className="tasks" key={idx}>
-                        <p className="title">{curr}</p>
+                        <input type="checkbox" />
+                        <label className="title">{curr}</label>
                       </div>
                     );
                   })}
@@ -51,7 +80,7 @@ const Home = () => {
                       placeholder="Add Task"
                       id={idx}
                       onChange={(e) => setchange(e.target.value)}
-                      onBlur={() => settitlearr([])}
+                      // onBlur={() => settitlearr([])}
                       ref={inputRef}
                     />
                   </form>
