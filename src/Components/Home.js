@@ -1,10 +1,10 @@
-import { useState , useRef } from "react";
+import { useState, useRef } from "react";
 
 const Home = () => {
   const [column, setcolumn] = useState([]);
   const [titlearr, settitlearr] = useState([]);
   const [change, setchange] = useState("");
-  const inputRef = useRef()
+  const inputRef = useRef();
   const addNewCol = () => {
     settitlearr([]);
     const note = {
@@ -15,10 +15,12 @@ const Home = () => {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
+    if(!change) return
     const title = change;
     titlearr.push(title);
     settitlearr([...titlearr]);
-    inputRef.current.value = ""
+    inputRef.current.value = "";
+    setchange('')
     const actualTitle = titlearr;
     column[e.target.id] = {
       ...column[e.target.id],
@@ -35,7 +37,7 @@ const Home = () => {
           ? column?.map((curr, idx) => {
               return (
                 <div className="box" key={idx} id={idx}>
-                <h2>TODO</h2>
+                  <h2>TODO</h2>
                   {column[idx]?.titles?.map((curr, idx) => {
                     return (
                       <div className="tasks" key={idx}>
